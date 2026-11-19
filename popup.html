@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  :root { color-scheme: light dark; --bg:#fff; --fg:#1a1a1a; --muted:#666; --line:#d8d8d8; --accent:#2563eb; --card:#f6f7f9; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#1d1e20; --fg:#eee; --muted:#9a9a9a; --line:#3a3b3e; --card:#27282b; } }
+  body { width: 380px; margin: 0; padding: 14px; font: 13px/1.4 system-ui, sans-serif; background: var(--bg); color: var(--fg); }
+  h1 { font-size: 16px; margin: 0 0 10px; }
+  h2 { font-size: 12px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); margin: 16px 0 6px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 10px; }
+  label { display: block; font-size: 11px; color: var(--muted); margin: 8px 0 2px; }
+  input[type=text], input[type=password], textarea { width: 100%; box-sizing: border-box; padding: 6px 8px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); color: var(--fg); font: inherit; }
+  textarea { min-height: 60px; resize: vertical; }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  button { padding: 8px 12px; border: 0; border-radius: 6px; background: var(--accent); color: #fff; font: inherit; font-weight: 600; cursor: pointer; }
+  button.secondary { background: transparent; color: var(--fg); border: 1px solid var(--line); }
+  .actions { display: flex; gap: 8px; margin-top: 12px; }
+  .actions button { flex: 1; }
+  #status { margin-top: 10px; min-height: 18px; font-size: 12px; color: var(--muted); }
+  .small { font-size: 11px; color: var(--muted); margin-top: 4px; }
+  .check { display: flex; align-items: center; gap: 6px; margin-top: 8px; }
+  .check label { margin: 0; font-size: 12px; color: var(--fg); }
+</style>
+</head>
+<body>
+  <h1>Internship AutoFill</h1>
+
+  <h2>1. Resume</h2>
+  <div class="card">
+    <input type="file" id="resumeFile" accept=".pdf,.txt">
+    <div class="small" id="resumeInfo">No resume saved yet.</div>
+    <label>Anthropic API key (optional — lets Claude read PDF resumes)</label>
+    <input type="password" id="apiKey" placeholder="sk-ant-...">
+    <div class="actions"><button id="importBtn">Read resume &amp; fill profile</button></div>
+    <div class="small">Without a key, only .txt resumes are parsed; PDFs are still saved for attaching and you can type your details below.</div>
+  </div>
+
+  <h2>2. Your details</h2>
+  <div class="card" id="fields"></div>
+
+  <div class="check"><input type="checkbox" id="overwrite"><label for="overwrite">Overwrite fields that already have text</label></div>
+
+  <div class="actions">
+    <button class="secondary" id="saveBtn">Save</button>
+    <button id="fillBtn">Fill this page</button>
+  </div>
+  <div id="status"></div>
+  <script src="popup.js"></script>
+</body>
+</html>
